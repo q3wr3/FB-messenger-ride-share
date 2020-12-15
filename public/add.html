@@ -1,0 +1,301 @@
+<html>
+<head>
+    <title>Нудам Превоз</title>
+    <link rel="stylesheet" type="text/css" href="css/gen.css" />
+    <link rel="stylesheet" type="text/css" href="css/date-time-picker.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'Messenger'));
+
+    window.extAsyncInit = () => {
+        // TODO: How to parse env file from here?
+        MessengerExtensions.getSupportedFeatures(function success(result) {
+            let features = result.supported_features;
+            if (features.includes("context")) {
+                MessengerExtensions.getContext('822182217987182',
+                    function success(thread_context) {
+                        // success
+                        document.getElementById("psid").value = thread_context.psid;
+                        console.log(thread_context);
+                    },
+                    function error(err) {
+                        // error
+                        console.log(err);
+                    }
+                );
+            }
+        }, function error(err) {
+            // error retrieving supported features
+            console.log(err);
+        });
+
+        var element = document.getElementById('Form');
+        if (element.addEventListener) {
+            element.addEventListener("submit", function(evt) {
+                MessengerExtensions.requestCloseBrowser(function success() {
+                    console.log("Webview closing");
+                }, function error(err) {
+                    console.log(err);
+                });
+                
+            }, true);
+        }/**/
+
+
+
+        function validate(){
+            var data = {
+                "from" : document.forms["myForm"]["from"].value,
+                "to" : document.forms["myForm"]["to"].value,
+                "tripDate" : document.forms["myForm"]["tripDate"].value,
+                "tripTime" : document.forms["myForm"]["tripTime"].value,
+                "bagage" : document.forms["myForm"]["bagage"].value,
+                "seats" : document.forms["myForm"]["seats"].value
+            }
+            
+            Object.values(data).forEach(val => {
+              if (val == "" || val == undefined) {
+                console.log('DUDE');
+              }
+            });
+
+        }
+    };
+
+</script>
+<script type="text/javascript" src="js/date-time-picker.min.js"></script>
+<section class="grid ">
+    <form id="Form"class="full" action="/addPostback" method="get">
+        <input type="hidden" name="psid" id="psid" value="">
+        <div class="location">
+            <div class="select-box">
+                <label for="selectID"><span>Од</span></label>
+                <div class="fancy-select">
+                    <select id="selectID" name="from" required >
+                        <option value="">Одбери Град</option>
+                        <option value="Битола">Битола</option>
+                        <option value="Скопје">Скопје</option>
+                        <option value="Охрид">Охрид</option>
+                        <option value="Велес">Велес</option>
+                        <option value="Прилеп">Прилеп</option>
+                        <option value="Ресен">Ресен</option>
+                        <option value="Гевгелија">Гевгелија</option>
+                        <option value="Гостивар">Гостивар</option>
+                        <option value="Дебар">Дебар</option>
+                        <option value="Делчево">Делчево</option>
+                        <option value="Демир Капија">Демир Капија</option>
+                        <option value="Демир Хисар">Демир Хисар</option>
+                        <option value="Кавадарци">Кавадарци</option>
+                        <option value="Кичево">Кичево</option>
+                        <option value="Кочани">Кочани</option>
+                        <option value="Кратово">Кратово</option>
+                        <option value="Крива Паланка">Крива Паланка</option>
+                        <option value="Крушево">Крушево</option>
+                        <option value="Куманово">Куманово</option>
+                        <option value="Македонски Брод">Македонски Брод</option>
+                        <option value="Македонска Каменица">Македонска Каменица</option>
+                        <option value="Неготино">Неготино</option>
+                        <option value="Валандово">Валандово</option>
+                        <option value="Пехчево">Пехчево</option>
+                        <option value="Берово">Берово</option>
+                        <option value="Пробиштип">Пробиштип</option>
+                        <option value="Радовиш">Радовиш</option>
+                        <option value="Виница">Виница</option>
+                        <option value="Свети Николе">Свети Николе</option>
+                        <option value="Богданци">Богданци</option>
+                        <option value="Струга">Струга</option>
+                        <option value="Струмица">Струмица</option>
+                        <option value="Тетово">Тетово</option>
+                        <option value="Штип">Штип</option> 
+                    </select>
+                </div>
+            </div>
+            <div class="select-box">
+                <label for="selectID"><span>До</span></label>
+                <div class="fancy-select">
+                    <select id="selectID" name="to" required >
+                        <option value="">Одбери Град</option>
+                        <option value="Битола">Битола</option>
+                        <option value="Скопје">Скопје</option>
+                        <option value="Охрид">Охрид</option>
+                        <option value="Велес">Велес</option>
+                        <option value="Прилеп">Прилеп</option>
+                        <option value="Ресен">Ресен</option>
+                        <option value="Гевгелија">Гевгелија</option>
+                        <option value="Гостивар">Гостивар</option>
+                        <option value="Дебар">Дебар</option>
+                        <option value="Делчево">Делчево</option>
+                        <option value="Демир Капија">Демир Капија</option>
+                        <option value="Демир Хисар">Демир Хисар</option>
+                        <option value="Кавадарци">Кавадарци</option>
+                        <option value="Кичево">Кичево</option>
+                        <option value="Кочани">Кочани</option>
+                        <option value="Кратово">Кратово</option>
+                        <option value="Крива Паланка">Крива Паланка</option>
+                        <option value="Крушево">Крушево</option>
+                        <option value="Куманово">Куманово</option>
+                        <option value="Македонски Брод">Македонски Брод</option>
+                        <option value="Македонска Каменица">Македонска Каменица</option>
+                        <option value="Неготино">Неготино</option>
+                        <option value="Валандово">Валандово</option>
+                        <option value="Пехчево">Пехчево</option>
+                        <option value="Берово">Берово</option>
+                        <option value="Пробиштип">Пробиштип</option>
+                        <option value="Радовиш">Радовиш</option>
+                        <option value="Виница">Виница</option>
+                        <option value="Свети Николе">Свети Николе</option>
+                        <option value="Богданци">Богданци</option>
+                        <option value="Струга">Струга</option>
+                        <option value="Струмица">Струмица</option>
+                        <option value="Тетово">Тетово</option>
+                        <option value="Штип">Штип</option> 
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <div class="top-title full">
+                <h4 class="title">Датум и Време</h4>
+            </div>
+            <div class="datetime">
+                <input type="date" hidden id="date">
+                <input type="time" hidden id="time">
+                <div class="date">
+                    <input type="text" required  placeholder="Одбери Датум" id="tripDate" name="date">
+                    <span class="dateIcon icon"></span>
+                    <div id="showDate"></div>
+                </div>
+                <div class="time">
+                    <input type="text" required  placeholder="Одбери Време" id="tripTime" name="time">
+                    <span class="timeIcon icon"></span>
+                    <div id="showTime"></div>
+                </div>
+                
+                
+                <script type="text/javascript">
+                showDate.onclick = function () {
+                var datePicker = new DateTimePicker.Date({
+                  lang: 'EN',
+                  format: 'dd-MM-yyyy',
+                  default: date.value,
+                  min: date.value,
+                },{
+                  day: ['Нед', 'Пон', 'Вто', 'Сре', 'Чет', 'Пет', 'Саб'],
+                  shortDay: ['Н', 'П', 'В', 'Ср', 'Ч', 'П', 'Са'],
+                  MDW: 'D, MM-d',
+                  YM: 'yyyy-M',
+                  OK: 'OK',
+                  CANCEL: 'Откажи',
+                  CLEAR: 'Избриши'
+                })
+                datePicker.on('selected', function (formatDate, now) {
+                  console.log('selected date: ', formatDate, now)
+                  /*date.value = formatDate*/
+
+                  document.getElementById('tripDate').value = formatDate;
+                })
+                datePicker.on('cleared', function () {
+                  console.log('cleared date')
+                  date.value = ''
+                  document.getElementById('tripDate').value ='';
+                })
+                }
+                showTime.onclick = function () {
+                var timePicker = new DateTimePicker.Time({
+                  default: time.value,
+                  minuteStep: 10
+                })
+                timePicker.on('selected', function (formatTime, now) {
+                  console.log('selected time: ', formatTime, now)
+                  /*time.value = formatTime*/
+                  document.getElementById('tripTime').value = formatTime;
+
+                })
+                timePicker.on('cleared', function () {
+                  console.log('cleared time')
+                  time.value = ''
+                  document.getElementById('tripTime').value = '';
+                })
+                }
+                </script>
+            </div>
+        </div>
+        <div class="seats">
+            <div class="top-title full">
+                <h4 class="title">Слободни места</h4>
+            </div>
+            <div class="input-group" id="seats">
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="one" value="1" checked="checked">
+                    <label for="one">
+                        <div class="usrsvg"></div> x 1
+                    </label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="two" value="2" >
+                    <label for="two">
+                        <div class="usrsvg"></div> x 2
+
+                    </label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="tre" value="3" >
+                    <label for="tre">
+                        <div class="usrsvg"></div> x 3
+
+                    </label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="for" value="4" >
+                    <label for="for">
+                        <div class="usrsvg"></div> x 4
+                    </label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="fiv" value="5" >
+                    <label for="fiv">
+                        <div class="usrsvg"></div> x 5
+
+                    </label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="seats" id="six" value="6" >
+                    <label for="six">
+                        <div class="usrsvg"></div> x 6
+                    </label>            
+                </div>
+            </div>
+        </div>
+        <div class="bagage">
+            <div class="top-title full">
+                <h4 class="title">Место за багаж</h4>
+            </div>
+           <div class="input-group" id="bagage">
+                <div class="rc-box">
+                    <input type="radio" required  name="bagage" id="noBagage" value="0" checked="checked">
+                    <label for="noBagage">Нема</label>            
+                </div>
+                <div class="rc-box">
+                    <input type="radio" required  name="bagage" id="yesBagage" value="1" >
+                    <label for="yesBagage">Има</label>            
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Објави" class="btn" id="submitButton">
+    </form>
+</section>
+
+</body>
+</html>
